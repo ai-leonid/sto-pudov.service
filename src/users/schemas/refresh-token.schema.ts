@@ -6,9 +6,9 @@ export type RefreshTokenDocument = HydratedDocument<RefreshToken>;
 @Schema({ timestamps: true })
 export class RefreshToken {
   @Prop({ type: String })
-  user_id: string;
+  userId: string;
   @Prop({ type: Boolean })
-  is_revoked: boolean;
+  isRevoked: boolean;
   @Prop({ type: Date })
   expires: Date;
   @Prop({ default: now() })
@@ -18,3 +18,4 @@ export class RefreshToken {
 }
 
 export const RefreshTokenSchema = SchemaFactory.createForClass(RefreshToken);
+export const RefreshTokenSchemaAlias = 'refresh-token';

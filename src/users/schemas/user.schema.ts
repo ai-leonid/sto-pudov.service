@@ -8,19 +8,19 @@ export class User {
   @Prop({ type: String })
   username: string;
   @Prop({ type: String })
-  first_name: string;
+  firstName: string;
   @Prop({ type: String })
-  last_name: string;
+  lastName: string;
   @Prop({ type: String })
-  activation_code: string;
+  activationCode: string;
   @Prop({ type: String })
   email: string;
   @Prop({ type: String })
-  email_code: string;
+  emailCode: string;
   @Prop({ type: String })
   password: string;
   @Prop({ type: String })
-  password_reset_code;
+  passwordResetCode;
   @Prop({ default: now() })
   createdAt: Date;
   @Prop({ default: now() })
@@ -28,3 +28,5 @@ export class User {
 }
 
 export const UserSchema = SchemaFactory.createForClass(User);
+
+export const UserSchemaAlias = 'user';

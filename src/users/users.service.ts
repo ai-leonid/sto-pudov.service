@@ -3,8 +3,8 @@ import { LoggerService } from '../common/service/logger.service';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model, Types } from 'mongoose';
 import { CreateUserDto } from './dto/create-user.dto';
-import { User } from './schemas/user.schema';
-import { RefreshToken } from './schemas/refreshtoken.schema';
+import { User, UserSchemaAlias } from './schemas/user.schema';
+import { RefreshToken, RefreshTokenSchemaAlias } from 'src/users/schemas/refresh-token.schema';
 import * as bcrypt from 'bcrypt';
 import { userData } from 'src/interface/common';
 import { v4 as uuid } from 'uuid';
@@ -12,9 +12,9 @@ import { v4 as uuid } from 'uuid';
 @Injectable()
 export class UserService {
   constructor(
-    @InjectModel(User.name) private readonly userModel: Model<User>,
-    @InjectModel(RefreshToken.name)
-    private readonly RefresTokenModel: Model<RefreshToken>,
+    @InjectModel(UserSchemaAlias) private readonly userModel: Model<User>,
+    @InjectModel(RefreshTokenSchemaAlias)
+    private readonly RefreshTokenModel: Model<RefreshToken>,
     private readonly logger: LoggerService,
   ) {}
 
@@ -24,14 +24,14 @@ export class UserService {
     const saltOrRounds = 10;
     const hashedPassword = await bcrypt.hash(createUserDto.password, saltOrRounds);
     createUserDto.password = hashedPassword;
-    const createduUser = await this.userModel.create(createUserDto);
-    return createduUser;
+    const createdUser = await this.userModel.create(createUserDto);
+    return createdUser;
   }
 
   async findAll(): Promise<userData[]> {
     const id: string = uuid();
     this.logger.log(
-      'User service findall called',
+      'User service findAll called',
       id,
       'users.service.ts',
       '',
@@ -59,7 +59,7 @@ export class UserService {
   }
 
   async createRefreshToken(createUserDto: CreateUserDto): Promise<boolean> {
-    const createduUser = await this.RefresTokenModel.create(createUserDto);
+    const createdUser = await this.RefreshTokenModel.create(createUserDto);
     return true;
   }
 }

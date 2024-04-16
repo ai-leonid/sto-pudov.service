@@ -9,7 +9,7 @@ async function bootstrap() {
     .setTitle('Sto pudov api')
     .setDescription('Sto pudov api based on the nestjs/jwt package')
     .setVersion('1.0')
-    .addServer('http://localhost:3000/', 'Local environment')
+    .addServer('http://localhost:3040', 'Local environment')
     .addCookieAuth(
       'refresh_token',
       {

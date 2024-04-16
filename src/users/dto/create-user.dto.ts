@@ -6,11 +6,11 @@ export class CreateUserDto {
   @IsNotEmpty()
   username: string;
   @ApiProperty({ example: 'Pradip', description: 'first of the user' })
-  first_name: string;
+  firstName: string;
   @ApiProperty({ example: 'Patil', description: 'lastname of the user' })
-  last_name: string;
+  lastName: string;
   @ApiProperty({
-    example: 'Pradipatil1@',
+    example: 'Pass@',
     description: 'Password length min 8,1 lowerscase and uppercase letter, 1 number ,1symbol',
   })
   @IsStrongPassword({
@@ -21,14 +21,14 @@ export class CreateUserDto {
     minUppercase: 1,
   })
   password: string;
-  password_reset_code?: string;
+  passwordResetCode?: string;
   @ApiProperty({ example: 'Patil@test.com', description: 'email of the user' })
   email: string;
   @ApiPropertyOptional({ example: 'SDD1333', description: 'email code of the user' })
-  email_code?: string;
+  emailCode?: string;
   @IsOptional()
   @ApiPropertyOptional({ example: '22221111', description: 'email code of the user' })
-  activation_code?: string;
+  activationCode?: string;
   @ApiProperty({ description: 'Date of creation' })
   @IsOptional()
   createdAt?: Date;

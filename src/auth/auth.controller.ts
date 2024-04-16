@@ -14,14 +14,14 @@ import { Response } from 'express';
 import { AuthService } from './auth.service';
 import { Public } from './decorators/public.decorator';
 import { HttpExceptionFilter } from '../utils/http-exception.filter';
-import { RtGuard } from '../common/guards/rt.guard';
+import { RtGuard } from 'src/common/guards';
 import { v4 as uuid } from 'uuid';
 import {
   sendResponse,
   loginSuccessResponse,
   loginErrorResponse,
   refreshErrorResponse,
-} from '../utils/index';
+} from 'src/utils';
 import { statusMessage } from '../constant/statusMessage';
 import { ApiBearerAuth, ApiCookieAuth, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { GetCurrentUser, GetCurrentUserId } from '../common/decorators';
@@ -41,7 +41,7 @@ export class AuthController {
   @Post('login')
   async signIn(@Body() signInDto: SignInDto, @Res() res: Response) {
     const id: string = uuid();
-    this.logger.log('User login api called', id, 'auth.controler.ts', 'POST', '/login', 'signIn');
+    this.logger.log('User login api called', id, 'auth.controller.ts', 'POST', '/login', 'signIn');
     const token = await this.authService.signIn(signInDto.email, signInDto.password);
 
     res.cookie('access_token', token.access_token, {
@@ -82,7 +82,7 @@ export class AuthController {
     this.logger.log(
       'User refresh api called',
       id,
-      'auth.controler.ts',
+      'auth.controller.ts',
       'POST',
       '/refresh',
       'refreshTokens',

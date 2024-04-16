@@ -27,12 +27,12 @@ import {
 import { statusMessage } from '../constant/statusMessage';
 import { HttpExceptionFilter } from '../utils/http-exception.filter';
 import { responseData, userData } from '../interface/common';
-import { AuthGuard } from '../common/guards/at.guard';
+import { AuthGuard } from 'src/common/guards';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { v4 as uuid } from 'uuid';
 
 @ApiTags('users')
-@Controller('v1/users')
+@Controller('/v1/users')
 export class UserController {
   constructor(private readonly userService: UserService, private readonly logger: LoggerService) {}
 
@@ -48,7 +48,14 @@ export class UserController {
   @UsePipes(new ValidationPipe({ transform: true }))
   async create(@Body() createCatDto: CreateUserDto, @Res() res: Response): Promise<responseData> {
     const id: string = uuid();
-    this.logger.log('User create api called', id, 'users.controler.ts', 'POST', '/users', 'create');
+    this.logger.log(
+      'User create api called',
+      id,
+      'users.controller.ts',
+      'POST',
+      '/users',
+      'create',
+    );
     const user = await this.userService.create(createCatDto);
     return sendResponse(res, HttpStatus.CREATED, statusMessage[HttpStatus.CREATED], true, user);
   }
@@ -65,7 +72,7 @@ export class UserController {
   @UseFilters(new HttpExceptionFilter())
   async findAll(@Res() res: Response): Promise<userData[]> {
     const id: string = uuid();
-    this.logger.log('User list api called', id, 'users.controler.ts', 'GET', '/users', 'findAll');
+    this.logger.log('User list api called', id, 'users.controller.ts', 'GET', '/users', 'findAll');
     const userList = await this.userService.findAll();
     return sendResponse(res, HttpStatus.OK, statusMessage[HttpStatus.OK], true, userList);
   }
