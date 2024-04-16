@@ -2,6 +2,7 @@ import { NestFactory } from '@nestjs/core';
 import * as cookieParser from 'cookie-parser';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
+import { ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -33,6 +34,9 @@ async function bootstrap() {
   const document = SwaggerModule.createDocument(app, options);
   SwaggerModule.setup('swagger', app, document);
   app.use(cookieParser());
+
+  app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
+
   await app.listen(Number(process.env.PORT) || 3000);
   console.log(`Application is running on: ${await app.getUrl()}`);
 }

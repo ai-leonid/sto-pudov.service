@@ -45,7 +45,6 @@ export class UserController {
   @Public()
   @Post()
   @UseFilters(new HttpExceptionFilter())
-  @UsePipes(new ValidationPipe({ transform: true }))
   async create(@Body() createCatDto: CreateUserDto, @Res() res: Response): Promise<responseData> {
     const id: string = uuid();
     this.logger.log(
