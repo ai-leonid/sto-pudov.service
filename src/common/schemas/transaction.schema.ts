@@ -5,13 +5,6 @@ import { UserSchemaAlias } from 'src/common/schemas/user.schema';
 export type TransactionDocument = HydratedDocument<Transaction>;
 export const TransactionSchemaAlias = 'transaction';
 
-export enum TransactionStatusEnum {
-  PROCESSING = 'processing',
-  COMPLETED = 'completed',
-  CANCELLED = 'cancelled',
-  MODERATE = 'moderate',
-}
-
 @Schema({ timestamps: true })
 export class Transaction {
   @Prop({ required: true, type: Types.ObjectId, ref: UserSchemaAlias })

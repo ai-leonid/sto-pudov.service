@@ -1,23 +1,29 @@
-import { NestFactory } from '@nestjs/core';
+import { NestFactory, Reflector } from '@nestjs/core';
 import cookieParser from 'cookie-parser';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
+import { ClassSerializerInterceptor, ValidationPipe } from '@nestjs/common';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  // app.useGlobalInterceptors(
+  //   new ClassSerializerInterceptor(app.get(Reflector), {
+  //     strategy: 'excludeAll',
+  //   }),
+  // );
+
   const options = new DocumentBuilder()
     .setTitle('Sto pudov api')
     .setDescription('Sto pudov api based on the nestjs/jwt package')
     .setVersion('1.0')
     .addServer('http://localhost:3040', 'Local environment')
     .addCookieAuth(
-      'refresh_token',
+      'refreshToken',
       {
         type: 'apiKey',
         in: 'cookie',
       },
-      'refresh_token',
+      'refreshToken',
     )
     .addBearerAuth(
       {
@@ -35,7 +41,9 @@ async function bootstrap() {
   SwaggerModule.setup('swagger', app, document);
   app.use(cookieParser());
 
-  app.useGlobalPipes(new ValidationPipe({ transform: true, whitelist: true }));
+  app.useGlobalPipes(
+    new ValidationPipe({ /* forbidNonWhitelisted: true,*/ whitelist: true, transform: true }),
+  );
 
   await app.listen(Number(process.env.PORT) || 3000);
   console.log(`Application is running on: ${await app.getUrl()}`);

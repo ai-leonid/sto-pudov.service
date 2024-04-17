@@ -1,17 +1,11 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { HydratedDocument, now, Types } from 'mongoose';
 import { UserSchemaAlias } from 'src/common/schemas/user.schema';
+import { WithdrawalStatusEnum } from 'src/withdrawals/withdrawals.enum';
 
 export type WithdrawalDocument = HydratedDocument<Withdrawal>;
 
 export const WithdrawalSchemaAlias = 'withdrawal';
-
-export enum WithdrawalStatusEnum {
-  PROCESSING = 'processing',
-  COMPLETED = 'completed',
-  CANCELLED = 'cancelled',
-  MODERATE = 'moderate',
-}
 
 @Schema({ timestamps: true })
 export class Withdrawal {

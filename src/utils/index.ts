@@ -4,20 +4,20 @@ export const errorHandler = (res = null, statusCode = 500, message = 'Internal S
   throw new HttpException(message, statusCode);
 };
 
-export const sendResponse = (
+export function sendResponse<T>(
   res = null,
   statusCode = 200,
   message = 'Success',
   isSuccess = true,
-  data = null,
-) => {
+  data: T | null = null,
+) {
   return res.json({
     statusCode,
     isSuccess,
     message,
     data,
   });
-};
+}
 
 export const userSuccessResponse = {
   status: 201,
@@ -38,16 +38,11 @@ export const userSuccessResponse = {
         isSuccess: true,
         message: 'Record Created',
         data: {
-          username: 'test username',
-          firstName: 'pradip',
-          lastName: 'patil',
-          email: 'pradip@test.com',
-          emailCode: 'DAQJ1',
-          password: '4xeuIuIK3XGXHX3xtMBAM4uYeWlWsOg8RC',
-          passwordResetCode: '122222',
-          createdAt: '2023-12-22T04:45:45.710Z',
-          updatedAt: '2023-12-22T04:45:45.710Z',
-          _id: '6585147f97b06',
+          firstName: 'Ivan',
+          lastName: 'Ivanov',
+          email: 'example@test.com',
+          createdAt: '2023-12-11T04:45:45.710Z',
+          updatedAt: '2023-12-11T04:45:45.710Z',
         },
       },
     },
@@ -69,14 +64,14 @@ export const userErrorResponse = {
           timestamp: { type: 'date', example: '2023-12-22T05:17:16.499Z' },
           error: {
             type: 'array',
-            example: ['username should not be empty', 'username must be a number string'],
+            example: ['firstName should not be empty'],
           },
         },
       },
       example: {
         statusCode: 400,
         message: 'Bad Request Exception',
-        error: ['username should not be empty', 'username must be a number string'],
+        error: ['firstName should not be empty'],
         timestamp: '2023-12-22T05:17:16.499Z',
         path: '/v1/users',
         isSuccess: false,
@@ -101,16 +96,12 @@ export const userListSuccessResponse = {
             type: 'array',
             example: [
               {
-                createdAt: '2023-12-22T05:44:35.286Z',
-                updatedAt: '2023-12-22T05:44:35.286Z',
-                _id: '657845cf5dc54b24021ecf04',
-                username: '11',
+                createdAt: '2023-12-11T05:44:35.286Z',
+                updatedAt: '2023-12-11T05:44:35.286Z',
+                id: '657845cf5dc54b24021ecf04',
                 firstName: 'test',
                 lastName: 'test',
                 email: 'te@test.com',
-                emailCode: 'eee',
-                password: 'rBbjMr00UhkxZAX3C/fR/tt3nwjua',
-                passwordResetCode: '1',
               },
             ],
           },
@@ -122,16 +113,12 @@ export const userListSuccessResponse = {
         message: 'SUCCESS',
         data: [
           {
-            createdAt: '2023-12-22T05:44:35.286Z',
-            updatedAt: '2023-12-22T05:44:35.286Z',
-            _id: '657845cf5dc54b24021ecf04',
-            username: '11',
+            createdAt: '2023-12-11T05:44:35.286Z',
+            updatedAt: '2023-12-11T05:44:35.286Z',
+            id: '657845cf5dc54b24021ecf04',
             firstName: 'test',
             lastName: 'test',
             email: 'te@test.com',
-            emailCode: 'eee',
-            password: '7rBbjMr00UhkxZAX3C/fR/tt3nwjua',
-            passwordResetCode: '1',
           },
         ],
       },

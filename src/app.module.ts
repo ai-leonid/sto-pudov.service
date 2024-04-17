@@ -6,6 +6,11 @@ import { LoggerService } from './common/service/logger.service';
 import { LoggerMiddleware } from './common/service/loggermiddleware.service';
 import { DatabaseModule } from './config/database.module';
 import { WithdrawalsModule } from './withdrawals/withdrawals.module';
+import { getModelToken, MongooseModule } from '@nestjs/mongoose';
+import { UserSchema, UserSchemaAlias } from 'src/common/schemas/user.schema';
+import { Model } from 'mongoose';
+import { nanoid } from 'src/utils/nanoid';
+import { importAllSchemas } from 'src/common/schemas';
 
 console.log(`${process.cwd()}/.env.${process.env.NODE_ENV}`);
 

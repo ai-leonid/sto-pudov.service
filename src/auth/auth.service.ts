@@ -17,7 +17,7 @@ export class AuthService {
   async signIn(email: string, pass: string) {
     const id: string = uuid();
     this.logger.log('auth service api called', id, 'auth.service.ts', '', '', 'signIn-service');
-    const user = await this.usersService.findOneUser(email);
+    const user = await this.usersService.findOneByEmail(email);
     const match = await bcrypt.compare(pass, user?.password);
 
     if (match) {
@@ -31,7 +31,7 @@ export class AuthService {
   }
 
   async refreshTokens(userId: string, rt: string) {
-    const user = await this.usersService.findOne(userId);
+    const user = await this.usersService.findOneById(userId);
 
     if (!user || !user.hashRt) throw new ForbiddenException('Access Denied.');
 
@@ -41,7 +41,7 @@ export class AuthService {
 
     const tokens = await this.getTokens(user);
 
-    const rtHash = await this.hashPassword(tokens.refresh_token);
+    const rtHash = await this.hashPassword(tokens.refreshToken);
 
     await this.usersService.updateOne(user._id, { hashRt: rtHash });
     return tokens;
@@ -53,7 +53,6 @@ export class AuthService {
         {
           sub: user.userId,
           email: user.email,
-          username: user.username,
         },
         {
           secret: jwtConstants.secret,
@@ -64,7 +63,6 @@ export class AuthService {
         {
           sub: user.userId,
           email: user.email,
-          username: user.username,
         },
         {
           secret: jwtConstants.secret,
@@ -74,8 +72,8 @@ export class AuthService {
     ]);
 
     return {
-      access_token: at,
-      refresh_token: rt,
+      accessToken: at,
+      refreshToken: rt,
     };
   }
 

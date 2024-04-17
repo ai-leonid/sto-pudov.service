@@ -31,20 +31,20 @@ import { GetCurrentUser, GetCurrentUserId } from '../common/decorators';
 export class AuthController {
   [x: string]: any;
 
-  constructor(private authService: AuthService, private readonly logger: LoggerService) {}
+  constructor(private _authService: AuthService, private readonly _logger: LoggerService) {}
 
-  @ApiResponse(loginSuccessResponse)
-  @ApiResponse(loginErrorResponse)
+  // @ApiResponse(loginSuccessResponse)
+  // @ApiResponse(loginErrorResponse)
   @Public()
-  @HttpCode(200)
-  @UseFilters(new HttpExceptionFilter())
-  @Post('login')
+  // @HttpCode(200)
+  @Post('/login')
+  // @UseFilters(new HttpExceptionFilter())
   async signIn(@Body() signInDto: SignInDto, @Res() res: Response) {
     const id: string = uuid();
-    this.logger.log('User login api called', id, 'auth.controller.ts', 'POST', '/login', 'signIn');
-    const token = await this.authService.signIn(signInDto.email, signInDto.password);
+    this._logger.log('User login api called', id, 'auth.controller.ts', 'POST', '/login', 'signIn');
+    const token = await this._authService.signIn(signInDto.email, signInDto.password);
 
-    res.cookie('access_token', token.access_token, {
+    res.cookie('accessToken', token.accessToken, {
       httpOnly: false,
       expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
       path: '/',
@@ -52,7 +52,7 @@ export class AuthController {
       secure: false,
     });
 
-    res.cookie('refresh_token', token.refresh_token, {
+    res.cookie('refreshToken', token.refreshToken, {
       httpOnly: false,
       expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
       path: '/',
@@ -63,9 +63,9 @@ export class AuthController {
     return sendResponse(res, HttpStatus.OK, statusMessage[HttpStatus.OK], true, null);
   }
 
-  @ApiResponse(loginSuccessResponse)
-  @ApiResponse(refreshErrorResponse)
-  @ApiCookieAuth('refresh_token')
+  // @ApiResponse(loginSuccessResponse)
+  // @ApiResponse(refreshErrorResponse)
+  @ApiCookieAuth('refreshToken')
   @ApiBearerAuth('JWT-auth')
   @Public()
   @UseGuards(RtGuard)
@@ -77,9 +77,9 @@ export class AuthController {
     @GetCurrentUser('user') userId: string,
     @Res() res: Response,
   ) {
-    const tokens = await this.authService.getTokens(payload);
+    const tokens = await this._authService.getTokens(payload);
     const id: string = uuid();
-    this.logger.log(
+    this._logger.log(
       'User refresh api called',
       id,
       'auth.controller.ts',
@@ -87,7 +87,7 @@ export class AuthController {
       '/refresh',
       'refreshTokens',
     );
-    res.cookie('access_token', tokens.access_token, {
+    res.cookie('accessToken', tokens.accessToken, {
       httpOnly: false,
       expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
       path: '/',
@@ -95,7 +95,7 @@ export class AuthController {
       secure: false,
     });
 
-    res.cookie('refresh_token', tokens.refresh_token, {
+    res.cookie('refreshToken', tokens.refreshToken, {
       httpOnly: false,
       expires: new Date(Date.now() + 1 * 24 * 60 * 60 * 1000),
       path: '/',

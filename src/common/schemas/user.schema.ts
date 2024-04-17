@@ -2,8 +2,7 @@ import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose, { HydratedDocument, now, Types } from 'mongoose';
 import { customAlphabet } from 'nanoid';
 import { UserRolesEnum } from 'src/users/users.enum';
-const alphabet = '0123456789';
-const nanoid = customAlphabet(alphabet, 13);
+import { nanoid } from 'src/utils/nanoid';
 
 export type UserDocument = HydratedDocument<User>;
 export const UserSchemaAlias = 'user';
@@ -36,7 +35,7 @@ export class User {
   @Prop({ type: String, default: null })
   password: string | null;
 
-  @Prop({ type: String, unique: true, default: nanoid() })
+  @Prop({ type: String, unique: true, default: () => nanoid() })
   shortNumber: string;
 
   @Prop({ type: String, default: '' })
@@ -80,21 +79,19 @@ export class User {
 
 export const UserSchema = SchemaFactory.createForClass(User);
 
-UserSchema.pre('save', async function (next) {
-  const user = this;
-  mongoose
-    .model('users')
-    .findOne({ shortNumber: user.shortNumber })
-    .then((existingDoc) => {
-      if (existingDoc) {
-        const err = new Error('Validation error: shortNumber must be unique');
-        err.name = 'ValidationError';
-        next(err);
-      } else {
-        next();
-      }
-    })
-    .catch((error) => {
-      next(error);
-    });
-});
+// UserSchema.pre('save', async function (next) {
+//   const user = this;
+//   UserDocument.findOne({ shortNumber: user.shortNumber })
+//     .then((existingDoc) => {
+//       if (existingDoc) {
+//         const err = new Error('Validation error: shortNumber must be unique');
+//         err.name = 'ValidationError';
+//         next(err);
+//       } else {
+//         next();
+//       }
+//     })
+//     .catch((error) => {
+//       next(error);
+//     });
+// });

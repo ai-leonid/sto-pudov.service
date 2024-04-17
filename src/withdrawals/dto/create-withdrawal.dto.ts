@@ -1,5 +1,5 @@
 import { IsString, IsNotEmpty, IsNumber, IsEnum } from 'class-validator';
-import { WithdrawalStatusEnum } from 'src/common/schemas/withdrawal.schema';
+import { WithdrawalStatusEnum } from 'src/withdrawals/withdrawals.enum';
 
 export class CreateWithdrawalDto {
   @IsNotEmpty()

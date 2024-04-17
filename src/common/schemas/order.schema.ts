@@ -5,13 +5,6 @@ import { UserSchemaAlias } from 'src/common/schemas/user.schema';
 export type OrderDocument = HydratedDocument<Order>;
 export const OrderSchemaAlias = 'order';
 
-export enum OrderStatusEnum {
-  PROCESSING = 'processing',
-  COMPLETED = 'completed',
-  CANCELLED = 'cancelled',
-  MODERATE = 'moderate',
-}
-
 @Schema({ timestamps: true })
 export class Order {
   @Prop({ required: true, type: String })

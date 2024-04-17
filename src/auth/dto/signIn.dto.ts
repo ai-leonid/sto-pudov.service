@@ -3,17 +3,13 @@ import { IsNotEmpty, IsNumberString, IsOptional, IsStrongPassword } from 'class-
 
 export class SignInDto {
   @ApiProperty({
-    example: 'Pass1@',
-    description: 'Password length min 8,1 lowercase and uppercase letter, 1 number ,1symbol',
+    example: 'Password1@',
+    description: 'Password',
   })
-  @IsStrongPassword({
-    minLength: 8,
-    minLowercase: 1,
-    minNumbers: 1,
-    minSymbols: 1,
-    minUppercase: 1,
-  })
+  @IsNotEmpty()
   password: string;
-  @ApiProperty({ example: 'mybox@test.com', description: 'email of the user' })
+
+  @ApiProperty({ example: 'example@mail.ru', description: 'email of the user' })
+  @IsNotEmpty()
   email: string;
 }

@@ -35,7 +35,7 @@ export class RtGuard implements CanActivate {
     const isCookieAuth = `${process.env.IS_COOKIE_AUTH}`;
     let token = undefined;
     if (isCookieAuth === 'true') {
-      token = request?.cookies?.refresh_token ?? null;
+      token = request?.cookies?.refreshToken ?? null;
     } else {
       const [type, tokenValue] = request.headers.authorization?.split(' ') ?? [];
       token = type === 'Bearer' ? tokenValue : undefined;

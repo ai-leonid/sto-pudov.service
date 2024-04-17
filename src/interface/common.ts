@@ -1,6 +1,6 @@
 import { Types } from 'mongoose';
 
-export interface responseData {
+export interface IResponseData {
   statusCode: number;
   timestamp: string;
   path?: string;
