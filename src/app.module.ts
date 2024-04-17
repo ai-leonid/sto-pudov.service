@@ -11,6 +11,8 @@ import { UserSchema, UserSchemaAlias } from 'src/common/schemas/user.schema';
 import { Model } from 'mongoose';
 import { nanoid } from 'src/utils/nanoid';
 import { importAllSchemas } from 'src/common/schemas';
+import { TransactionsModule } from './transactions/transactions.module';
+import { OrdersModule } from './orders/orders.module';
 
 console.log(`${process.cwd()}/.env.${process.env.NODE_ENV}`);
 
@@ -25,6 +27,8 @@ console.log(`${process.cwd()}/.env.${process.env.NODE_ENV}`);
     UserModule,
     AuthModule,
     WithdrawalsModule,
+    TransactionsModule,
+    OrdersModule,
   ],
   providers: [LoggerService],
 })
