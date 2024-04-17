@@ -26,7 +26,7 @@ import {
 } from '../utils';
 import { statusMessage } from '../constant/statusMessage';
 import { HttpExceptionFilter } from '../utils/http-exception.filter';
-import { responseData, userData } from '../interface/common';
+import { responseData, IUserData } from '../interface/common';
 import { AuthGuard } from 'src/common/guards';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { v4 as uuid } from 'uuid';
@@ -69,7 +69,7 @@ export class UserController {
   @UseGuards(AuthGuard)
   @Get()
   @UseFilters(new HttpExceptionFilter())
-  async findAll(@Res() res: Response): Promise<userData[]> {
+  async findAll(@Res() res: Response): Promise<IUserData[]> {
     const id: string = uuid();
     this.logger.log('User list api called', id, 'users.controller.ts', 'GET', '/users', 'findAll');
     const userList = await this.userService.findAll();

@@ -5,8 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { LoggerService } from './common/service/logger.service';
 import { LoggerMiddleware } from './common/service/loggermiddleware.service';
 import { DatabaseModule } from './config/database.module';
-import { HelloController } from './hello/hello.controller';
-import { helloModule } from './hello/hello.module';
+import { WithdrawalsModule } from './withdrawals/withdrawals.module';
 
 console.log(`${process.cwd()}/.env.${process.env.NODE_ENV}`);
 
@@ -20,7 +19,7 @@ console.log(`${process.cwd()}/.env.${process.env.NODE_ENV}`);
     DatabaseModule,
     UserModule,
     AuthModule,
-    helloModule,
+    WithdrawalsModule,
   ],
   providers: [LoggerService],
 })

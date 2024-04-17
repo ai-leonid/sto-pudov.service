@@ -21,7 +21,7 @@ export class AuthService {
     const match = await bcrypt.compare(pass, user?.password);
 
     if (match) {
-      const payload = { email: user.email, userId: user._id.toString(), username: user.username };
+      const payload = { email: user.email, userId: user._id.toString() };
       const tokens = await this.getTokens(payload);
       return {
         ...tokens,
@@ -33,9 +33,9 @@ export class AuthService {
   async refreshTokens(userId: string, rt: string) {
     const user = await this.usersService.findOne(userId);
 
-    if (!user || !user.hashdRt) throw new ForbiddenException('Access Denied.');
+    if (!user || !user.hashRt) throw new ForbiddenException('Access Denied.');
 
-    const rtMatches = await bcrypt.compare(rt, user.hashdRt);
+    const rtMatches = await bcrypt.compare(rt, user.hashRt);
 
     if (!rtMatches) throw new ForbiddenException('Access Denied.');
 
@@ -43,7 +43,7 @@ export class AuthService {
 
     const rtHash = await this.hashPassword(tokens.refresh_token);
 
-    await this.usersService.updateOne(user._id, { hashdRt: rtHash });
+    await this.usersService.updateOne(user._id, { hashRt: rtHash });
     return tokens;
   }
 

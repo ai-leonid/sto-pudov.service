@@ -6,7 +6,7 @@ import { CreateUserDto } from './dto/create-user.dto';
 import { User, UserSchemaAlias } from 'src/common/schemas/user.schema';
 import { RefreshToken, RefreshTokenSchemaAlias } from 'src/common/schemas/refresh-token.schema';
 import * as bcrypt from 'bcrypt';
-import { userData } from 'src/interface/common';
+import { IUserData } from 'src/interface/common';
 import { v4 as uuid } from 'uuid';
 
 @Injectable()
@@ -28,7 +28,7 @@ export class UserService {
     return createdUser;
   }
 
-  async findAll(): Promise<userData[]> {
+  async findAll(): Promise<IUserData[]> {
     const id: string = uuid();
     this.logger.log(
       'User service findAll called',
@@ -41,11 +41,11 @@ export class UserService {
     return this.userModel.find().exec();
   }
 
-  async findOne(id: string): Promise<userData> {
+  async findOne(id: string): Promise<IUserData> {
     return this.userModel.findOne({ _id: id }).exec();
   }
 
-  async findOneUser(email: string): Promise<userData> {
+  async findOneUser(email: string): Promise<IUserData> {
     return this.userModel.findOne({ email: email }).exec();
   }
 
@@ -54,7 +54,7 @@ export class UserService {
     return deletedUser;
   }
 
-  async updateOne(userId: Types.ObjectId | string, data: userData) {
+  async updateOne(userId: Types.ObjectId | string, data: IUserData) {
     await this.userModel.updateOne({ _id: userId }, data);
   }
 

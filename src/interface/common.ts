@@ -10,15 +10,24 @@ export interface responseData {
   error: string | null | [];
 }
 
-export interface userData {
-  username?: string;
+export interface IUserData {
+  _id?: Types.ObjectId | string | null;
   firstName?: string;
   lastName?: string;
-  activationCode?: string;
   email?: string;
-  emailCode?: string;
+  role?: string;
+  registrationDate?: Date;
+  patronymic?: string;
   password?: string;
-  passwordResetCode?: string;
-  _id?: Types.ObjectId | string | null;
-  hashdRt?: string | null;
+  shortNumber?: string;
+  mainPhone?: string;
+  extraPhones?: string[];
+  promoCode?: string;
+  friendsIds?: Types.ObjectId[];
+  invitedById?: Types.ObjectId;
+  bankDetails?: string[];
+  balance?: number;
+  hashRt?: string | null;
+  // createdAt: Date;
+  // updatedAt: Date;
 }
